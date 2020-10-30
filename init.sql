@@ -24,7 +24,7 @@ CREATE TABLE Formation(
 
 
 CREATE TABLE Etudiant(
-  id int(8),
+  id int(10),
   nom varchar(25) not null,
   prenom varchar(25) not null,
   mail varchar(320) not null,
@@ -34,7 +34,7 @@ CREATE TABLE Etudiant(
 );
 
 CREATE TABLE Appartenir(
-  idEtudiant int(8),
+  idEtudiant int(10),
   idFormation int(8),
   effectif int(2),
   CONSTRAINT pk_id PRIMARY KEY(idEtudiant,idFormation),
@@ -48,7 +48,7 @@ CREATE TABLE Tuteur(
   prenom varchar(25) not null,
   mail varchar(320) not null,
   societe varchar(25) not null,
-  idEtudiant int(8),
+  idEtudiant int(10),
   CONSTRAINT pk_id PRIMARY KEY(id),
   CONSTRAINT fk_Tuteur_Etudiant FOREIGN KEY(idEtudiant) REFERENCES Etudiant(id)
 );
@@ -68,7 +68,7 @@ CREATE TABLE Message(
   contenu text,
   dateMessage timestamp,
   idAdministratif int(8),
-  idEtudiant int(8),
+  idEtudiant int(10),
   CONSTRAINT pk_id PRIMARY KEY(id),
   CONSTRAINT fk_Message_PersonnelAdministratif FOREIGN KEY(idAdministratif) REFERENCES PersonnelAdministratif(id),
   CONSTRAINT fk_Message_Etudiant FOREIGN KEY(idEtudiant) REFERENCES Etudiant(id)
@@ -144,7 +144,7 @@ CREATE TABLE Note(
   id int(8),
   visible tinyint,
   idMatiere int(8),
-  idEtudiant int(8),
+  idEtudiant int(10),
   idIntervenant int(8),
   idFormation int(8),
   coefficient int(1),
@@ -157,7 +157,7 @@ CREATE TABLE Note(
 
 CREATE TABLE Participer(
 	idCours int(8),
-    idEtudiant int(8),
+    idEtudiant int(10),
     present tinyint,
     CONSTRAINT pk_id PRIMARY KEY(idCours,idEtudiant),
     CONSTRAINT fk_Participer_Cours FOREIGN KEY(idCours) REFERENCES Cours(id),
