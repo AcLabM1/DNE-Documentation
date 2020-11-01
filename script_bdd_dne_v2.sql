@@ -3,31 +3,31 @@ CREATE DATABASE DNE;
 USE DNE;
 
 CREATE TABLE Personne(
-    idPersonne INT(10) NOT NULL AUTO_INCREMENT,
+    idPersonne INT(10),
     nom VARCHAR(45) NOT NULL,
     prenom VARCHAR(45) NOT NULL,
     CONSTRAINT pk_personne PRIMARY KEY(idPersonne)
 );
 
 CREATE TABLE InterneUniv(
-    idInterne INT(10) NOT NULL,
+    idInterne INT(10),
     idUniv VARCHAR(45) NOT NULL,
-    emailUniv VARCHAR(100),
+    emailUniv VARCHAR(320),
     CONSTRAINT pk_interneUniv PRIMARY KEY(idInterne),
     CONSTRAINT fk_interneUniv_personne FOREIGN KEY(idInterne) REFERENCES Personne(idPersonne)
 );
 
 CREATE TABLE Etudiant(
-    idEtudiant INT(10) NOT NULL,
+    idEtudiant INT(10),
     dateNaissance DATE,
-    emailPersonnel VARCHAR(100),
+    emailPersonnel VARCHAR(320),
     numeroTelephone VARCHAR(20),
     CONSTRAINT pk_etudiant PRIMARY KEY(idEtudiant),
     CONSTRAINT fk_etudiant_interneUniv FOREIGN KEY(idEtudiant) REFERENCES InterneUniv(idInterne)
 );
 
 CREATE TABLE Employe(
-    idEmploye INT(10) NOT NULL,
+    idEmploye INT(10),
     telephoneUniv VARCHAR(20),
     bureau VARCHAR(45),
     CONSTRAINT pk_employe PRIMARY KEY(idEmploye), 
@@ -35,14 +35,14 @@ CREATE TABLE Employe(
 );
 
 CREATE TABLE Administratif(
-    idAdministratif INT(10) NOT NULL,
+    idAdministratif INT(10),
     fonction VARCHAR(45),
     CONSTRAINT pk_administratif PRIMARY KEY(idAdministratif),
     CONSTRAINT fk_administratif_employe FOREIGN KEY(idAdministratif) REFERENCES Employe(idEmploye)
 );
 
 CREATE TABLE Enseignant(
-    idEnseignant INT(10) NOT NULL,
+    idEnseignant INT(10),
     estVacataire BOOLEAN,
     telephone VARCHAR(20),
     CONSTRAINT pk_enseignant PRIMARY KEY(idEnseignant),
@@ -50,14 +50,14 @@ CREATE TABLE Enseignant(
 );
 
 CREATE TABLE ResponsableFormation(
-    idResponsableFormation INT(10) NOT NULL,
+    idResponsableFormation INT(10),
     CONSTRAINT pk_responsableFormation PRIMARY KEY(idResponsableFormation),
     CONSTRAINT fk_responsableFormation_enseignant FOREIGN KEY(idResponsableFormation) REFERENCES Enseignant(idEnseignant)
 );
 
 CREATE TABLE Tuteur(
-    idTuteur INT(10) NOT NULL,
-    emailPro VARCHAR(100),
+    idTuteur INT(10),
+    emailPro VARCHAR(320),
     telephonePro VARCHAR(20),
     societe VARCHAR(100),
     CONSTRAINT pk_tuteur PRIMARY KEY(idTuteur),
@@ -65,9 +65,9 @@ CREATE TABLE Tuteur(
 );
 
 CREATE TABLE Communication(
-    idCommunication INT(10) NOT NULL AUTO_INCREMENT,
-    idEtudiant INT(10) NOT NULL,
-    idEmploye INT(10) NOT NULL,
+    idCommunication INT(10),
+    idEtudiant INT(10),
+    idEmploye INT(10),
     dateHeure DATETIME,
     nature VARCHAR(20),
     description TEXT,
@@ -77,7 +77,7 @@ CREATE TABLE Communication(
 );
 
 CREATE TABLE Matiere(
-    idMatiere INT(10) NOT NULL AUTO_INCREMENT,
+    idMatiere INT(10),
     codeMatiere VARCHAR(45),
     quotaHeure TINYINT(1) UNSIGNED,
     creditsECTS TINYINT(1) UNSIGNED,
@@ -88,13 +88,13 @@ CREATE TABLE Matiere(
 );
 
 CREATE TABLE UE(
-    idUE INT(10) NOT NULL AUTO_INCREMENT,
+    idUE INT(10),
     intitule VARCHAR(100),
     CONSTRAINT pk_ue PRIMARY KEY(idUE)
 );
 
 CREATE TABLE Diplome(
-    idDiplome INT(10) NOT NULL AUTO_INCREMENT,
+    idDiplome INT(10),
     intitule VARCHAR(100),
     totalECTS TINYINT(1) UNSIGNED,
     estActif BOOLEAN,
@@ -102,18 +102,18 @@ CREATE TABLE Diplome(
 );
 
 CREATE TABLE Promotion(
-    idPromotion INT(10) NOT NULL AUTO_INCREMENT,
+    idPromotion INT(10),
     annee DATE,
-    idDiplome INT(10) NOT NULL,
-    idResponsableFormation INT(10) NOT NULL,
+    idDiplome INT(10),
+    idResponsableFormation INT(10),
     CONSTRAINT pk_promotion PRIMARY KEY(idPromotion),
     CONSTRAINT fk_promotion_diplome FOREIGN KEY(idDiplome) REFERENCES Diplome(idDiplome),
     CONSTRAINT fk_promotion_responsableFormation FOREIGN KEY(idResponsableFormation) REFERENCES ResponsableFormation(idResponsableFormation)
 );
 
 CREATE TABLE Inscrire(
-    idEtudiant INT(10) NOT NULL,
-    idPromotion INT(10) NOT NULL,
+    idEtudiant INT(10),
+    idPromotion INT(10),
     idTuteur INT(10), 
     CONSTRAINT pk_inscrire PRIMARY KEY(idEtudiant, idPromotion),
     CONSTRAINT fk_inscrire_etudiant FOREIGN KEY(idEtudiant) REFERENCES Etudiant(idEtudiant),
@@ -122,15 +122,15 @@ CREATE TABLE Inscrire(
 );
 
 CREATE TABLE MatiereDansUE(
-    idMatiere INT(10) NOT NULL,
-    idUE INT(10) NOT NULL,
+    idMatiere INT(10),
+    idUE INT(10),
     CONSTRAINT pk_matiereDansUE PRIMARY KEY(idMatiere, idUE),
     CONSTRAINT fk_matiereDansUE_matiere FOREIGN KEY(idMatiere) REFERENCES Matiere(idMatiere),
     CONSTRAINT fk_matiereDansUE_UE FOREIGN KEY(idUE) REFERENCES UE(idUE)
 );
 
 CREATE TABLE UEDansDiplome(
-    idUE INT(10) NOT NULL,
+    idUE INT(10),
     idDiplome INT(10),
     CONSTRAINT pk_UEDansDiplome PRIMARY KEY(idUE, idDiplome),
     CONSTRAINT fk_UEDansDiplome_UE FOREIGN KEY(idUE) REFERENCES UE(idUE),
@@ -138,12 +138,12 @@ CREATE TABLE UEDansDiplome(
 );
 
 CREATE TABLE Note(
-    idNote INT(10) NOT NULL AUTO_INCREMENT,
-    idEtudiant INT(10) NOT NULL,
-    idMatiere INT(10) NOT NULL,
-    idUE INT(10) NOT NULL,
-    idDiplome INT(10) NOT NULL,
-    idPromotion INT(10) NOT NULL,
+    idNote INT(10),
+    idEtudiant INT(10),
+    idMatiere INT(10),
+    idUE INT(10),
+    idDiplome INT(10),
+    idPromotion INT(10),
     note TINYINT(1) UNSIGNED,
     dateObtention DATETIME,
     coefficient TINYINT(1) UNSIGNED,
@@ -158,7 +158,7 @@ CREATE TABLE Note(
 );
 
 CREATE TABLE Session(
-    idSession INT(10) NOT NULL AUTO_INCREMENT,
+    idSession INT(10),
     dateHeure DATETIME,
     duree TINYINT(1) UNSIGNED,
     salle VARCHAR(45),
@@ -174,8 +174,8 @@ CREATE TABLE Session(
 );
 
 CREATE TABLE AnimerSession(
-    idEnseignant INT(10) NOT NULL,
-    idSession INT(10) NOT NULL,
+    idEnseignant INT(10),
+    idSession INT(10),
     estPresent BOOLEAN,
     CONSTRAINT pk_animerSession PRIMARY KEY(idEnseignant, idSession),
     CONSTRAINT fk_animerSession_enseignant FOREIGN KEY(idEnseignant) REFERENCES Enseignant(idEnseignant),
@@ -183,8 +183,8 @@ CREATE TABLE AnimerSession(
 );
 
 CREATE TABLE AssisterSession(
-    idEtudiant INT(10) NOT NULL,
-    idSession INT(10) NOT NULL,
+    idEtudiant INT(10),
+    idSession INT(10),
     estPresent BOOLEAN,
     CONSTRAINT pk_assisterSession PRIMARY KEY(idEtudiant, idSession),
     CONSTRAINT fk_assisterSession_enseignant FOREIGN KEY(idEtudiant) REFERENCES Etudiant(idEtudiant),
@@ -192,11 +192,11 @@ CREATE TABLE AssisterSession(
 );
 
 CREATE TABLE Enseigner(
-    idEnseignant INT(10) NOT NULL,
-    idMatiere INT(10) NOT NULL,
-    idUE INT(10) NOT NULL,
-    idDiplome INT(10) NOT NULL,
-    idPromotion INT(10) NOT NULL,
+    idEnseignant INT(10),
+    idMatiere INT(10),
+    idUE INT(10),
+    idDiplome INT(10),
+    idPromotion INT(10),
     CONSTRAINT pk_enseigner PRIMARY KEY(idEnseignant, idMatiere, idUE, idDiplome, idPromotion),
     CONSTRAINT fk_enseigner_enseignant FOREIGN KEY(idEnseignant) REFERENCES Enseignant(idEnseignant),
     CONSTRAINT fk_enseigner_matiere FOREIGN KEY(idMatiere) REFERENCES Matiere(idMatiere),
