@@ -186,7 +186,7 @@ CREATE TABLE AssisterSession(
     idEtudiant INT(10) NOT NULL,
     idSession INT(10) NOT NULL,
     estPresent BOOLEAN,
-    CONSTRAINT pk_assisterSession PRIMARY KEY(idEtudiant, idMatiere, idUE, idDiplome, idPromotion),
+    CONSTRAINT pk_assisterSession PRIMARY KEY(idEtudiant, idSession),
     CONSTRAINT fk_assisterSession_enseignant FOREIGN KEY(idEtudiant) REFERENCES Etudiant(idEtudiant),
     CONSTRAINT fk_assisterSession_session FOREIGN KEY(idSession) REFERENCES Session(idSession)
 );
