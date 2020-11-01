@@ -15,7 +15,7 @@ CREATE TABLE Responsable(
 CREATE TABLE Formation(
   id int(8),
   nom varchar(25) not null,
-  annnee int(4) not null,
+  annee int(4) not null,
   idResponsable int(8),
   CONSTRAINT pk_id PRIMARY KEY(id),
   CONSTRAINT fk_Formation_Responsable FOREIGN KEY(idResponsable) REFERENCES Responsable(id)
