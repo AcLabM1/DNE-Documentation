@@ -51,6 +51,7 @@ CREATE TABLE Enseignant(
 
 CREATE TABLE ResponsableFormation(
     idResponsableFormation INT(10),
+    poste VARCHAR(50),
     CONSTRAINT pk_responsableFormation PRIMARY KEY(idResponsableFormation),
     CONSTRAINT fk_responsableFormation_enseignant FOREIGN KEY(idResponsableFormation) REFERENCES Enseignant(idEnseignant)
 );
